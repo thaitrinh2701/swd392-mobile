@@ -16,11 +16,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Rookies Comic',
       theme: ThemeData(
+        // Áp dụng font cho toàn dự án
+        fontFamily: "NerkoOne",
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const LoginPage(), // Đặt trang đầu tiên là LoginPage
+      home: LoginPage(), // Trang đầu tiên là LoginPage
     );
   }
 }
