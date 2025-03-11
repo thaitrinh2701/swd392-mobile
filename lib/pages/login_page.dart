@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:swd392_mobile/components/alternative_login.dart';
+import 'package:swd392_mobile/pages/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -16,22 +16,15 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children: [
-          _buildBackgroundImage(),
-          _buildLoginForm(context), // Truyền context vào đây
-        ],
+        children: [_buildBackgroundImage(), _buildLoginForm(context)],
       ),
     );
   }
 
-  // Ảnh nền
   Widget _buildBackgroundImage() {
     return Positioned.fill(
       child: ImageFiltered(
-        imageFilter: ImageFilter.blur(
-          sigmaX: 3,
-          sigmaY: 3,
-        ), // Chỉnh độ mờ của background
+        imageFilter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
         child: Image.network(
           'https://cdn.donmai.us/original/1f/99/__usami_renko_and_maribel_hearn_touhou_drawn_by_yuhezi__1f991ff8142e60a21cc5ec3c773214ed.jpg',
           fit: BoxFit.cover,
@@ -61,15 +54,12 @@ class _LoginPageState extends State<LoginPage> {
             _buildTextField(passwordController, "Password", isPassword: true),
             const SizedBox(height: 12),
             _buildLoginButton(),
-            const SizedBox(height: 15),
-            AlternativeLogin(), // Gọi component login Google
           ],
         ),
       ),
     );
   }
 
-  // Logo
   Widget _buildLogo() {
     return Container(
       width: 250,
@@ -78,20 +68,17 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // Tiêu đề
   Widget _buildTitle() {
     return const Text(
       "WELCOME BACK, ROOKIE !!",
       style: TextStyle(
         fontSize: 25,
         fontWeight: FontWeight.w500,
-        // color: Color(0xFF4D4FC1),
         color: Colors.black,
       ),
     );
   }
 
-  // Ô nhập liệu
   Widget _buildTextField(
     TextEditingController controller,
     String hint, {
@@ -111,22 +98,16 @@ class _LoginPageState extends State<LoginPage> {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(
-            color: Color(0xFF4D4FC1),
-          ), // Màu viền khi chưa focus
+          borderSide: BorderSide(color: Color(0xFF4D4FC1)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(
-            color: Color(0xFF4D4FC1),
-            width: 2,
-          ), // Màu viền khi focus
+          borderSide: BorderSide(color: Color(0xFF4D4FC1), width: 2),
         ),
       ),
     );
   }
 
-  // Nút đăng nhập
   Widget _buildLoginButton() {
     return SizedBox(
       width: double.infinity,
@@ -148,64 +129,10 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // Widget _buildAlternativeLogin() {
-  //   return Column(
-  //     children: [
-  //       // Dòng kẻ ngang và chữ "OR"
-  //       Row(
-  //         children: [
-  //           Expanded(
-  //             child: Divider(
-  //               color: Colors.black,
-  //               thickness: 1,
-  //               indent: 20,
-  //               endIndent: 10,
-  //             ),
-  //           ),
-  //           Text(
-  //             "OR",
-  //             style: TextStyle(
-  //               color: Colors.black,
-  //               fontWeight: FontWeight.bold,
-  //             ),
-  //           ),
-  //           Expanded(
-  //             child: Divider(
-  //               color: Colors.black,
-  //               thickness: 1,
-  //               indent: 10,
-  //               endIndent: 20,
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //       SizedBox(height: 10), // Khoảng cách
-  //       // Nút đăng nhập với Google
-  //       ElevatedButton.icon(
-  //         onPressed: () {
-  //           // TODO: Thêm logic đăng nhập Google ở đây
-  //         },
-  //         icon: Image.asset(
-  //           'assets/images/google_icon.png', // Đường dẫn đến icon Google
-  //           width: 24,
-  //           height: 24,
-  //         ),
-  //         label: Text(
-  //           "Log in with Google",
-  //           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-  //         ),
-  //         style: ElevatedButton.styleFrom(
-  //           backgroundColor: Colors.white, // Màu nền trắng giống Instagram
-  //           shape: RoundedRectangleBorder(
-  //             borderRadius: BorderRadius.circular(8), // Viền bo góc
-  //             side: BorderSide(color: Color(0xFF4D4FC1)), // Viền xám nhẹ
-  //           ),
-  //           padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-
-  void _login() {}
+  void _login() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const HomePage()),
+    );
+  }
 }

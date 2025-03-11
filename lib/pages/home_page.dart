@@ -1,56 +1,58 @@
 import 'package:flutter/material.dart';
-import 'package:swd392_mobile/components/signOutGoogle.dart';
+import 'package:swd392_mobile/pages/mangas_screen.dart';
 
-class HomePage extends StatelessWidget {
-  final String email;
-  final String token;
+class HomePage extends StatefulWidget {
+  const HomePage({super.key, this.index});
 
-  const HomePage({Key? key, required this.email, required this.token})
-    : super(key: key);
+  final int? index;
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    if (widget.index != null) {
+      _selectedIndex = widget.index!;
+    }
+    super.initState();
+  }
+
+  final _destinations = [
+    const NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
+    const NavigationDestination(icon: Icon(Icons.search), label: 'Search'),
+    const NavigationDestination(
+      icon: Icon(Icons.category),
+      label: 'Categories',
+    ),
+    const NavigationDestination(icon: Icon(Icons.settings), label: 'Settings'),
+  ];
+
+  final _screens = [
+    const MangasScreen(),
+    const Center(child: Text('Search Screen')),
+    const Center(child: Text('Categories Screen')),
+    const Center(child: Text('Settings Screen')),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Home Page")),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            UserInfo(email: email, token: token), //
-            const SizedBox(height: 20),
-            SignOutGoogleButton(),
-          ],
-        ),
+      body: _screens[_selectedIndex],
+      bottomNavigationBar: NavigationBar(
+        elevation: 12,
+        backgroundColor: Theme.of(context).dialogTheme.backgroundColor,
+        selectedIndex: _selectedIndex,
+        destinations: _destinations,
+        onDestinationSelected: (value) {
+          setState(() {
+            _selectedIndex = value;
+          });
+        },
       ),
-    );
-  }
-}
-
-class UserInfo extends StatelessWidget {
-  final String email;
-  final String token;
-
-  const UserInfo({Key? key, required this.email, required this.token})
-    : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          "Welcome, $email!",
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Text(
-          "Token:",
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 5),
-        SelectableText(token, textAlign: TextAlign.center),
-      ],
     );
   }
 }
