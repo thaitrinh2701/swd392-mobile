@@ -17,7 +17,7 @@ class NewMangaList extends StatelessWidget {
 
         if (snapshot.hasData) {
           final mangas = snapshot.data!;
-          return NewMangaImageSlider(mangas: mangas);
+          return NewMangaImageSlider(mangas: mangas, title: "Latest Updates");
         }
 
         return Text(snapshot.error.toString());

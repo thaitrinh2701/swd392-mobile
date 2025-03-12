@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:swd392_mobile/widgets/feature_manga.widget.dart';
 import 'package:swd392_mobile/widgets/new_mangas_widget.dart';
 import 'package:swd392_mobile/widgets/top_mangas_widget.dart';
 
@@ -26,8 +27,11 @@ class _MangasScreenState extends State<MangasScreen> {
 
             SizedBox(height: 20),
 
-            // Manga mới ra mắt
-            SizedBox(height: 350, child: NewMangaList()),
+            // Manga vừa updated - 4 manga
+            SizedBox(height: 265, child: NewMangaList()),
+
+            // Feature Manga - 6 manga
+            SizedBox(height: 270, child: FeatureMangaList()),
           ],
         ),
       ),
