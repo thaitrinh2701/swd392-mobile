@@ -5,8 +5,14 @@ import 'package:swd392_mobile/pages/views_all_mangas_list_page.dart';
 class MangaSlider extends StatefulWidget {
   final List<Map<String, String>> mangas;
   final String title;
+  final Function(Map<String, String>) onTapManga;
 
-  const MangaSlider({super.key, required this.mangas, required this.title});
+  const MangaSlider({
+    super.key,
+    required this.mangas,
+    required this.title,
+    required this.onTapManga, // Nhận callback onTapManga
+  });
 
   @override
   State<MangaSlider> createState() => _MangaSliderState();
@@ -76,30 +82,36 @@ class _MangaSliderState extends State<MangaSlider> {
           ),
           itemBuilder: (context, index, realIndex) {
             final manga = widget.mangas[index];
-            return Column(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.network(
-                    manga["cover_url"] ?? "",
-                    fit: BoxFit.cover,
-                    width: 120,
-                    height: 160,
-                    errorBuilder:
-                        (context, error, stackTrace) =>
-                            const Icon(Icons.broken_image, size: 80),
+            return GestureDetector(
+              onTap:
+                  () => widget.onTapManga(
+                    manga,
+                  ), // Gọi hàm onTapManga khi nhấn vào
+              child: Column(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.network(
+                      manga["cover_url"] ?? "",
+                      fit: BoxFit.cover,
+                      width: 120,
+                      height: 160,
+                      errorBuilder:
+                          (context, error, stackTrace) =>
+                              const Icon(Icons.broken_image, size: 80),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  (manga["comic_name"]?.length ?? 0) > 20
-                      ? "${manga["comic_name"]!.substring(0, 20)}..."
-                      : manga["comic_name"] ?? "Unknown",
-                  style: const TextStyle(color: Colors.black, fontSize: 14),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
+                  const SizedBox(height: 5),
+                  Text(
+                    (manga["comic_name"]?.length ?? 0) > 20
+                        ? "${manga["comic_name"]!.substring(0, 20)}..."
+                        : manga["comic_name"] ?? "Unknown",
+                    style: const TextStyle(color: Colors.black, fontSize: 14),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
             );
           },
         ),

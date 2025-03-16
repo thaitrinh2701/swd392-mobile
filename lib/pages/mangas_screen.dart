@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:swd392_mobile/models/manga.dart';
 import 'package:swd392_mobile/widgets/manga_list.dart';
-import 'package:swd392_mobile/widgets/weekly_top.dart';
-import 'package:swd392_mobile/widgets/monthly_top.dart';
 import 'package:swd392_mobile/widgets/top_mangas_widget.dart';
-import 'package:swd392_mobile/models/manga.dart'; // Import file chứa getTopMangaOfWeek
+import 'package:swd392_mobile/pages/manga_detail_page.dart';
 
 class MangasScreen extends StatefulWidget {
   const MangasScreen({super.key});
@@ -14,6 +12,27 @@ class MangasScreen extends StatefulWidget {
 }
 
 class _MangasScreenState extends State<MangasScreen> {
+  void _navigateToDetail(Map<String, String> manga) {
+    if (!mounted) return; // Tránh lỗi khi Widget bị dispose
+    if (manga.isEmpty) {
+      print("Error: Manga data is empty!");
+      return;
+    }
+
+    Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MangaDetailPage(manga: manga),
+          ),
+        )
+        .then((_) {
+          print("Returned from detail page");
+        })
+        .catchError((e) {
+          print("Navigation error: $e");
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,17 +43,16 @@ class _MangasScreenState extends State<MangasScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // TOP Manga - HIỆN TẠI là 4
             const SizedBox(height: 350, child: TopMangaList()),
 
             const SizedBox(height: 30),
 
-            // Manga vừa updated - 4 manga
             SizedBox(
               height: 240,
               child: MangaList(
                 fetchManga: () => getTopMangaOfWeek(limit: 4),
                 title: "Comics of the Week",
+                onTapManga: _navigateToDetail,
               ),
             ),
 
@@ -43,6 +61,7 @@ class _MangasScreenState extends State<MangasScreen> {
               child: MangaList(
                 fetchManga: () => getTopMangaOfMonth(limit: 4),
                 title: "Comics of the Month",
+                onTapManga: _navigateToDetail,
               ),
             ),
           ],

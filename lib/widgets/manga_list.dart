@@ -5,8 +5,14 @@ import 'package:swd392_mobile/widgets/slider.dart';
 class MangaList extends StatelessWidget {
   final Future<List<Map<String, String>>> Function() fetchManga;
   final String title;
+  final Function(Map<String, String>) onTapManga;
 
-  const MangaList({super.key, required this.fetchManga, required this.title});
+  const MangaList({
+    super.key,
+    required this.fetchManga,
+    required this.title,
+    required this.onTapManga,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +32,11 @@ class MangaList extends StatelessWidget {
         }
 
         final mangas = snapshot.data!;
-        return MangaSlider(mangas: mangas, title: title);
+        return MangaSlider(
+          mangas: mangas,
+          title: title,
+          onTapManga: onTapManga,
+        );
       },
     );
   }
