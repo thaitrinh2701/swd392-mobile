@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:swd392_mobile/components/alternative_login.dart';
 import 'package:swd392_mobile/pages/home_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -54,6 +55,12 @@ class _LoginPageState extends State<LoginPage> {
             _buildTextField(passwordController, "Password", isPassword: true),
             const SizedBox(height: 12),
             _buildLoginButton(),
+            const SizedBox(height: 12),
+            _buildDivider(),
+            const SizedBox(height: 12),
+            _buildGoogleLoginButton(), // Gọi hàm Google login khi nhấn nút
+            const SizedBox(height: 12),
+            _buildForgotPassword(),
           ],
         ),
       ),
@@ -129,10 +136,61 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _login() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const HomePage()),
+  Widget _buildDivider() {
+    return Row(
+      children: const [
+        Expanded(child: Divider(color: Colors.black)),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.0),
+          child: Text("OR", style: TextStyle(color: Colors.black)),
+        ),
+        Expanded(child: Divider(color: Colors.black)),
+      ],
     );
+  }
+
+  Widget _buildGoogleLoginButton() {
+    return SizedBox(
+      width: double.infinity,
+      height: 50,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+            side: BorderSide(color: Colors.black),
+          ),
+        ),
+        onPressed: () async {
+          await googleSignIn(context);
+        },
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset("assets/images/google_icon.png", height: 24),
+            const SizedBox(width: 12),
+            const Text("Sign in with Google", style: TextStyle(fontSize: 18)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildForgotPassword() {
+    return TextButton(
+      onPressed: () {},
+      child: const Text(
+        "Forgot password?",
+        style: TextStyle(color: Colors.black),
+      ),
+    );
+  }
+
+  void _login() {
+    // Navigator.pushReplacement(
+    //   context,
+    //   MaterialPageRoute(builder: (context) => const HomePage()),
+    // );
   }
 }

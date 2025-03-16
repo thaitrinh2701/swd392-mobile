@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swd392_mobile/pages/mangas_screen.dart';
+import 'package:swd392_mobile/pages/setting_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, this.index});
@@ -35,7 +36,7 @@ class _HomePageState extends State<HomePage> {
     const MangasScreen(),
     const Center(child: Text('Search Screen')),
     const Center(child: Text('Categories Screen')),
-    const Center(child: Text('Settings Screen')),
+    const SettingScreen(),
   ];
 
   @override
