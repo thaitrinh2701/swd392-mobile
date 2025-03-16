@@ -2,21 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:swd392_mobile/pages/views_all_mangas_list_page.dart';
 
-class NewMangaImageSlider extends StatefulWidget {
+class MangaSlider extends StatefulWidget {
   final List<Map<String, String>> mangas;
   final String title;
 
-  const NewMangaImageSlider({
-    super.key,
-    required this.mangas,
-    required this.title,
-  });
+  const MangaSlider({super.key, required this.mangas, required this.title});
 
   @override
-  State<NewMangaImageSlider> createState() => _NewMangaImageSliderState();
+  State<MangaSlider> createState() => _MangaSliderState();
 }
 
-class _NewMangaImageSliderState extends State<NewMangaImageSlider> {
+class _MangaSliderState extends State<MangaSlider> {
   int _currentIndex = 0;
   final CarouselSliderController _controller = CarouselSliderController();
 
