@@ -13,7 +13,7 @@ class MangasScreen extends StatefulWidget {
 
 class _MangasScreenState extends State<MangasScreen> {
   void _navigateToDetail(Map<String, String> manga) {
-    if (!mounted) return; // Tránh lỗi khi Widget bị dispose
+    if (!mounted) return;
     if (manga.isEmpty) {
       print("Error: Manga data is empty!");
       return;

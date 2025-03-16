@@ -94,7 +94,8 @@ Future<List<Map<String, String>>> getAllManga() async {
       "user_id": "admin",
       "created_date": "2025-03-10",
       "quantity_chap": "20",
-      "description": "An action-packed story about secret agents.",
+      "description":
+          "Takina Inoue, a high school girl working as a member of an all-female taskforce of assassins and spies known as \"Lycoris\" dispatched to eliminate criminals and terrorists in Tokyo, is sanctioned by her superiors at the DA agency for disobeying orders in order to save a colleague. She is transferred to work with the elite Lycoris agent Chisato Nishikigi at one of the agency's branches, which operates under the cover of a cafe, called LycoReco.",
       "status": "1",
       "view": "7200",
       "genres_id": "action",
