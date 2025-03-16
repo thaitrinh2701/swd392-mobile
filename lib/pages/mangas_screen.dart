@@ -67,7 +67,7 @@ class _MangasScreenState extends State<MangasScreen> {
               ),
             ),
 
-            const SizedBox(height: 10),
+            const SizedBox(height: 25),
 
             SizedBox(
               height: 240,

@@ -79,7 +79,7 @@ Future<List<Map<String, dynamic>>> getAllManga() async {
       "cover_url":
           "https://mangadex.org/covers/6b958848-c885-4735-9201-12ee77abcb3c/d8babd13-5736-4964-8963-b444a950d539.jpg",
       "user_id": "admin",
-      "created_date": DateTime(2025, 3, 10),
+      "created_date": DateTime(2025, 3, 13),
       "quantity_chap": 25,
       "description": "A spy comedy manga.",
       "status": 1,
@@ -92,7 +92,7 @@ Future<List<Map<String, dynamic>>> getAllManga() async {
       "cover_url":
           "https://mangadex.org/covers/f4fa3679-6918-4684-bcb6-377c9f336898/31d5e78e-a8f2-44fd-b1b0-94828a4f7fd4.jpg",
       "user_id": "admin",
-      "created_date": DateTime(2025, 3, 10),
+      "created_date": DateTime(2025, 3, 14),
       "quantity_chap": 15,
       "description": "A manga from the Touhou Project universe.",
       "status": 1,
@@ -105,7 +105,7 @@ Future<List<Map<String, dynamic>>> getAllManga() async {
       "cover_url":
           "https://mangadex.org/covers/9c21fbcd-e22e-4e6d-8258-7d580df9fc45/0184636a-f44c-4073-9b55-435120755e47.jpg",
       "user_id": "admin",
-      "created_date": DateTime(2025, 3, 10),
+      "created_date": DateTime(2025, 3, 15),
       "quantity_chap": 20,
       "description":
           "Takina Inoue, a high school girl working as a member of an all-female taskforce of assassins and spies known as \"Lycoris\" dispatched to eliminate criminals and terrorists in Tokyo, is sanctioned by her superiors at the DA agency for disobeying orders in order to save a colleague. She is transferred to work with the elite Lycoris agent Chisato Nishikigi at one of the agency's branches, which operates under the cover of a cafe, called LycoReco.",
@@ -158,7 +158,7 @@ Future<List<Map<String, dynamic>>> getAllManga() async {
       "cover_url":
           "https://mangadex.org/covers/a1c7c817-4e59-43b7-9365-09675a149a6f/249fa95b-2214-4ae3-a8f7-77338fe34542.png",
       "user_id": "admin",
-      "created_date": DateTime(2025, 2, 15),
+      "created_date": DateTime(2025, 2, 20),
       "quantity_chap": 1100,
       "description": "A grand pirate adventure.",
       "status": 1,
@@ -184,7 +184,7 @@ Future<List<Map<String, dynamic>>> getAllManga() async {
       "cover_url":
           "https://mangadex.org/covers/4141c5dc-c525-4df5-afd7-cc7d192a832f/92943ee9-92c3-43f9-96e2-d73515ace108.jpg",
       "user_id": "admin",
-      "created_date": DateTime(2024, 11, 10),
+      "created_date": DateTime(2025, 3, 15),
       "quantity_chap": 30,
       "description": "A high-stakes football competition.",
       "status": 1,

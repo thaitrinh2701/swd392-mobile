@@ -76,12 +76,15 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _buildTitle() {
-    return const Text(
-      "WELCOME BACK, ROOKIE !!",
-      style: TextStyle(
-        fontSize: 25,
-        fontWeight: FontWeight.w500,
-        color: Colors.black,
+    return const Center(
+      child: Text(
+        "WELCOME BACK, ROOKIE !!",
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 23,
+          fontWeight: FontWeight.w200,
+          color: Colors.black,
+        ),
       ),
     );
   }

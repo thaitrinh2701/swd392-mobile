@@ -25,20 +25,20 @@ class _HomePageState extends State<HomePage> {
   final _destinations = [
     const NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
     const NavigationDestination(
-      icon: Icon(Icons.library_books),
-      label: 'Library',
-    ),
-    const NavigationDestination(
       icon: Icon(Icons.category),
       label: 'Categories',
+    ),
+    const NavigationDestination(
+      icon: Icon(Icons.library_books),
+      label: 'Library',
     ),
     const NavigationDestination(icon: Icon(Icons.settings), label: 'Settings'),
   ];
 
   final _screens = [
     const MangasScreen(),
+    const Center(child: Text('Category Screen')),
     const Center(child: Text('Library Screen')),
-    const Center(child: Text('Categories Screen')),
     const SettingScreen(),
   ];
 
@@ -46,16 +46,23 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _screens[_selectedIndex],
-      bottomNavigationBar: NavigationBar(
-        elevation: 12,
-        backgroundColor: Theme.of(context).dialogTheme.backgroundColor,
-        selectedIndex: _selectedIndex,
-        destinations: _destinations,
-        onDestinationSelected: (value) {
-          setState(() {
-            _selectedIndex = value;
-          });
-        },
+      bottomNavigationBar: NavigationBarTheme(
+        data: NavigationBarThemeData(
+          labelTextStyle: WidgetStateProperty.all(
+            const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          ),
+        ),
+        child: NavigationBar(
+          elevation: 12,
+          backgroundColor: Theme.of(context).dialogTheme.backgroundColor,
+          selectedIndex: _selectedIndex,
+          destinations: _destinations,
+          onDestinationSelected: (value) {
+            setState(() {
+              _selectedIndex = value;
+            });
+          },
+        ),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:swd392_mobile/components/sign_out_google.dart';
+import 'package:swd392_mobile/pages/subscription_screen.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -66,6 +67,18 @@ class _SettingScreenState extends State<SettingScreen> {
             },
           ),
           SizedBox(height: 20),
+          _buildSectionTitle("Monetization"),
+          _buildListTile(
+            icon: Icons.monetization_on,
+            title: "Subscription Plans",
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SubscriptionScreen()),
+              );
+            },
+          ),
+          SizedBox(height: 20),
           _buildSectionTitle("Support"),
           _buildListTile(icon: Icons.help_outline, title: "Help Center"),
           _buildListTile(
@@ -75,7 +88,7 @@ class _SettingScreenState extends State<SettingScreen> {
             onTap: () async {
               bool confirm = await _showLogoutDialog(context);
               if (confirm) {
-                await SignOutGoogleButton().signOutGoogle(context);
+                await SignOutGoogleButton(context);
               }
             },
           ),

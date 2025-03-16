@@ -1,56 +1,72 @@
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'home_page.dart';
-import 'login_page.dart';
+import 'package:swd392_mobile/pages/home_page.dart';
+import 'package:swd392_mobile/pages/login_page.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
   @override
   void initState() {
     super.initState();
-    _checkLoginStatus();
+
+    // Hiệu ứng Fade-in cho logo
+    _controller = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    )..forward();
+    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
+
+    _navigateToNextScreen();
   }
 
-  Future<void> _checkLoginStatus() async {
+  Future<void> _navigateToNextScreen() async {
+    await Future.delayed(const Duration(seconds: 2)); // Hiển thị splash 2 giây
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? email = prefs.getString('email');
+    String? token = prefs.getString('token');
 
-    bool isLoggedIn = false;
-    if (email != null) {
-      GoogleSignIn googleSignIn = GoogleSignIn();
-      isLoggedIn = await googleSignIn.isSignedIn();
-    }
+    if (!mounted) return;
 
-    // Chuyển hướng sau 2 giây để hiển thị màn hình Splash
-    Future.delayed(const Duration(seconds: 2), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => isLoggedIn ? const HomePage() : LoginPage(),
-        ),
-      );
-    });
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder:
+            (context) =>
+                token != null && token.isNotEmpty
+                    ? const HomePage()
+                    : LoginPage(),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.white, // Màu nền Splash
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset("assets/images/logo_2.png", width: 150, height: 150),
-            const SizedBox(height: 20),
-            const CircularProgressIndicator(),
-          ],
+        child: FadeTransition(
+          opacity: _animation,
+          child: Image.asset(
+            "assets/images/logo_2.png",
+            width: 250, // Điều chỉnh kích thước logo
+          ),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }

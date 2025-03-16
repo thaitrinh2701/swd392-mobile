@@ -19,10 +19,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Rookies Comic',
       theme: ThemeData(
-        fontFamily: "NerkoOne",
+        fontFamily: "Coiny",
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: SplashScreen(),
+
+      home: const SplashScreen(),
     );
   }
 }

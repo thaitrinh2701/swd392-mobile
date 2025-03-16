@@ -57,7 +57,7 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Search Manga')),
+      appBar: AppBar(title: const Text('Search')),
       body: Column(
         children: [
           // Ô tìm kiếm
@@ -66,7 +66,7 @@ class _SearchPageState extends State<SearchPage> {
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                hintText: 'Search manga...',
+                hintText: 'Tìm Comic...',
                 prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
@@ -78,11 +78,7 @@ class _SearchPageState extends State<SearchPage> {
           // Hiển thị danh sách gợi ý
           Expanded(
             child:
-                isLoading
-                    ? const Center(
-                      child: CircularProgressIndicator(),
-                    ) // Đang tải
-                    : filteredMangas.isEmpty && hasSearched
+                filteredMangas.isEmpty && hasSearched
                     ? const Center(
                       child: Text("No manga found"),
                     ) // Không có kết quả

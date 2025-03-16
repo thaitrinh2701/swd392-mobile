@@ -13,8 +13,10 @@ Future<void> googleSignIn(BuildContext context) async {
     GoogleSignIn googleSignIn = GoogleSignIn(
       serverClientId: serverClientID,
       scopes: ['email', 'profile', 'openid'],
+      signInOption: SignInOption.standard,
     );
 
+    await googleSignIn.signOut();
     GoogleSignInAccount? user = await googleSignIn.signIn();
 
     if (user != null) {

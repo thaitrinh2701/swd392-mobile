@@ -56,7 +56,7 @@ class _MangaSliderState extends State<MangaSlider> {
                 child: const Text(
                   "View all",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF4D4FC1),
                   ),
