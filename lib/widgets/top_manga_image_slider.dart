@@ -37,11 +37,7 @@ class _TopMangaImageSliderState extends State<TopMangaImageSlider> {
                   )
                   : Container(),
         ),
-        Positioned.fill(
-          child: Container(
-            color: Colors.black.withOpacity(0.3), // Tăng độ trong suốt
-          ),
-        ),
+        Positioned.fill(child: Container(color: Color.fromRGBO(0, 0, 0, 0.3))),
         Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -80,7 +76,7 @@ class _TopMangaImageSliderState extends State<TopMangaImageSlider> {
               activeIndex: _currentIndex,
               count: widget.mangas.length,
               effect: ExpandingDotsEffect(
-                activeDotColor: Colors.blue,
+                activeDotColor: Color(0xFF4D4FC1),
                 dotHeight: 8.0,
                 dotWidth: 8.0,
               ),

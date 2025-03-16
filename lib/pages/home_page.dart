@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:swd392_mobile/pages/categories_screen.dart';
 import 'package:swd392_mobile/pages/mangas_screen.dart';
 import 'package:swd392_mobile/pages/setting_screen.dart';
 
@@ -37,7 +38,7 @@ class _HomePageState extends State<HomePage> {
 
   final _screens = [
     const MangasScreen(),
-    const Center(child: Text('Category Screen')),
+    const CategoryScreen(),
     const Center(child: Text('Library Screen')),
     const SettingScreen(),
   ];
@@ -48,9 +49,22 @@ class _HomePageState extends State<HomePage> {
       body: _screens[_selectedIndex],
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
-          labelTextStyle: WidgetStateProperty.all(
-            const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-          ),
+          labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((
+            Set<WidgetState> states,
+          ) {
+            if (states.contains(WidgetState.selected)) {
+              return const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+                color: Color(0xFF4D4FC1),
+              );
+            }
+            return const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+              color: Colors.grey,
+            );
+          }),
         ),
         child: NavigationBar(
           elevation: 12,
