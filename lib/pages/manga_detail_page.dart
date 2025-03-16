@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class MangaDetailPage extends StatefulWidget {
-  final Map<String, String> manga;
+  final Map<String, dynamic> manga;
 
   const MangaDetailPage({super.key, required this.manga});
 
@@ -16,6 +16,10 @@ class _MangaDetailPageState extends State<MangaDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Get the number of chapters from manga data
+    final int quantityChap =
+        int.tryParse(widget.manga['quantity_chap']?.toString() ?? '0') ?? 0;
+
     return Scaffold(
       body: Column(
         children: [
@@ -127,105 +131,187 @@ class _MangaDetailPageState extends State<MangaDetailPage> {
             ],
           ),
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  Row(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
                     children: [
-                      Expanded(
-                        child: ElevatedButton.icon(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            backgroundColor: Colors.white,
-                            foregroundColor: Colors.black,
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            textStyle: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          icon: const Icon(Icons.menu_book),
-                          label: const Text("Đọc truyện"),
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      PopupMenuButton<String>(
-                        onSelected: (value) {
-                          if (value == 'report') {
-                            // Xử lý báo cáo
-                          }
-                        },
-                        itemBuilder:
-                            (context) => [
-                              const PopupMenuItem(
-                                value: 'report',
-                                child: Text('Báo cáo'),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ElevatedButton.icon(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.black,
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                ),
+                                textStyle: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ],
-                        child: const Icon(Icons.more_vert, size: 28),
-                      ),
-                      const SizedBox(width: 10),
-                      IconButton(
-                        icon: Icon(
-                          Icons.bookmark,
-                          size: 28,
-                          color:
-                              isSaved
-                                  ? const Color(0xFF4D4FC1)
-                                  : Colors.transparent,
-                        ),
-                        style: IconButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            side: const BorderSide(
-                              color: Color(0xFF4D4FC1),
-                              width: 2,
+                              icon: const Icon(Icons.menu_book),
+                              label: const Text("Đọc truyện"),
                             ),
-                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          const SizedBox(width: 10),
+                          PopupMenuButton<String>(
+                            onSelected: (value) {
+                              if (value == 'report') {
+                                // Xử lý báo cáo
+                              }
+                            },
+                            itemBuilder:
+                                (context) => [
+                                  const PopupMenuItem(
+                                    value: 'report',
+                                    child: Text('Báo cáo'),
+                                  ),
+                                ],
+                            child: const Icon(Icons.more_vert, size: 28),
+                          ),
+                          const SizedBox(width: 10),
+                          IconButton(
+                            icon: Icon(
+                              Icons.bookmark,
+                              size: 28,
+                              color:
+                                  isSaved
+                                      ? const Color(0xFF4D4FC1)
+                                      : Colors.transparent,
+                            ),
+                            style: IconButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                side: const BorderSide(
+                                  color: Color(0xFF4D4FC1),
+                                  width: 2,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                isSaved = !isSaved;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          showFullDescription
+                              ? widget.manga['description']!
+                              : (widget.manga['description']!.length > 150
+                                  ? '${widget.manga['description']!.substring(0, 150)}...'
+                                  : widget.manga['description']!),
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ),
+                      if (widget.manga['description']!.length > 150)
+                        Align(
+                          alignment: Alignment.center,
+                          child: TextButton(
+                            onPressed: () {
+                              setState(() {
+                                showFullDescription = !showFullDescription;
+                              });
+                            },
+                            style: TextButton.styleFrom(
+                              foregroundColor: const Color(0xFF4D4FC1),
+                            ),
+                            child: Text(
+                              showFullDescription ? "Thu gọn" : "Xem thêm",
+                            ),
                           ),
                         ),
-                        onPressed: () {
-                          setState(() {
-                            isSaved = !isSaved;
-                          });
-                        },
+                    ],
+                  ),
+                ),
+
+                // Chapter section header
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 12.0,
+                  ),
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      top: BorderSide(color: Colors.grey, width: 0.5),
+                      bottom: BorderSide(color: Colors.grey, width: 0.5),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      const Text(
+                        "Chapters",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const Spacer(),
+                      Text(
+                        "($quantityChap)",
+                        style: const TextStyle(color: Colors.grey),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      showFullDescription
-                          ? widget.manga['description']!
-                          : (widget.manga['description']!.length > 150
-                              ? '${widget.manga['description']!.substring(0, 150)}...'
-                              : widget.manga['description']!),
-                      style: const TextStyle(fontSize: 16),
-                    ),
+                ),
+
+                // Chapter list
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: quantityChap > 0 ? quantityChap : 0,
+                    itemBuilder: (context, index) {
+                      // Chapter number (descending order by default)
+                      final int chapterNumber = quantityChap - index;
+
+                      return Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0,
+                          vertical: 12.0,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Colors.grey.shade300,
+                              width: 0.5,
+                            ),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            // Chapter title
+                            Text(
+                              "Chapter $chapterNumber",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                              ),
+                            ),
+
+                            // Arrow icon
+                            const Icon(
+                              Icons.arrow_forward_ios,
+                              size: 16,
+                              color: Colors.grey,
+                            ),
+                          ],
+                        ),
+                      );
+                    },
                   ),
-                  if (widget.manga['description']!.length > 150)
-                    Align(
-                      alignment: Alignment.center,
-                      child: TextButton(
-                        onPressed: () {
-                          setState(() {
-                            showFullDescription = !showFullDescription;
-                          });
-                        },
-                        style: TextButton.styleFrom(
-                          foregroundColor: const Color(0xFF4D4FC1),
-                        ),
-                        child: Text(
-                          showFullDescription ? "Thu gọn" : "Xem thêm",
-                        ),
-                      ),
-                    ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],

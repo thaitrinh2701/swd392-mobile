@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:swd392_mobile/models/manga.dart';
+import 'package:swd392_mobile/models/comics.dart';
+import 'package:swd392_mobile/pages/search_screen.dart';
 import 'package:swd392_mobile/widgets/manga_list.dart';
 import 'package:swd392_mobile/widgets/top_mangas_widget.dart';
 import 'package:swd392_mobile/pages/manga_detail_page.dart';
@@ -38,7 +39,17 @@ class _MangasScreenState extends State<MangasScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Rookies Comic'),
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.search))],
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SearchPage()),
+              );
+            },
+            icon: const Icon(Icons.search),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
