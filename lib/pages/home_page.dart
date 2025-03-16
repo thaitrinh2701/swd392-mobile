@@ -24,7 +24,10 @@ class _HomePageState extends State<HomePage> {
 
   final _destinations = [
     const NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-    const NavigationDestination(icon: Icon(Icons.search), label: 'Search'),
+    const NavigationDestination(
+      icon: Icon(Icons.library_books),
+      label: 'Library',
+    ),
     const NavigationDestination(
       icon: Icon(Icons.category),
       label: 'Categories',
@@ -34,7 +37,7 @@ class _HomePageState extends State<HomePage> {
 
   final _screens = [
     const MangasScreen(),
-    const Center(child: Text('Search Screen')),
+    const Center(child: Text('Library Screen')),
     const Center(child: Text('Categories Screen')),
     const SettingScreen(),
   ];

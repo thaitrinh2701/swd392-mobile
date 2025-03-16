@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swd392_mobile/pages/login_page.dart';
 
 class SignOutGoogleButton extends StatelessWidget {
@@ -12,23 +13,30 @@ class SignOutGoogleButton extends StatelessWidget {
       showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (context) => Center(child: CircularProgressIndicator()),
+        builder: (context) => const Center(child: CircularProgressIndicator()),
       );
 
-      // Đăng xuất Google và Firebase
-      await GoogleSignIn().signOut();
-      await FirebaseAuth.instance.signOut();
+      // Kiểm tra xem có người dùng đăng nhập không
+      if (FirebaseAuth.instance.currentUser != null) {
+        // Xóa dữ liệu đăng nhập từ SharedPreferences
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.clear();
+
+        // Đăng xuất Google và Firebase
+        await GoogleSignIn().signOut();
+        await FirebaseAuth.instance.signOut();
+      }
 
       // Đóng loading
       Navigator.of(context).pop();
 
-      // Chuyển hướng về LoginPage
-      Navigator.pushAndRemoveUntil(
-        context,
+      // Chuyển về màn hình đăng nhập, xóa hết màn hình trước đó
+      Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => LoginPage()),
         (route) => false,
       );
     } catch (e) {
+      // Đóng loading nếu có lỗi
       Navigator.of(context).pop();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

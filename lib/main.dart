@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:swd392_mobile/api/Firebase_api.dart';
-import 'package:swd392_mobile/pages/login_page.dart';
+import 'package:swd392_mobile/pages/splash_screen.dart'; // Import SplashScreen
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "NerkoOne",
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: LoginPage(),
+      home: SplashScreen(),
     );
   }
 }

@@ -47,6 +47,7 @@ dependencies:
   freezed_annotation: ^3.0.0
   build_runner: ^2.4.15
   freezed: ^3.0.3
+  flutter_native_splash: ^2.4.5
 
 dev_dependencies:
   flutter_test:
@@ -102,3 +103,10 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+flutter_native_splash:
+  color: "#ffffff"  # Màu nền của Splash Screen
+  image: assets/images/logo_2.png  
+  android: true
+  ios: true
+  fullscreen: true
