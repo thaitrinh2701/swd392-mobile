@@ -40,18 +40,25 @@ class _MangaSliderState extends State<MangaSlider> {
                   color: Colors.black,
                 ),
               ),
-              GestureDetector(
+              estureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder:
-                          (context) => AllMangasListPage(
-                            title: widget.title,
-                            mangas: widget.mangas,
-                          ),
-                    ),
-                  );
+                  if (widget.mangas.isNotEmpty) {
+                    if (!mounted) return; // Fix lỗi mất context
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder:
+                            (context) => AllMangasListPage(
+                              title: widget.title ?? "All Mangas",
+                              mangas: widget.mangas,
+                            ),
+                      ),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("No manga available")),
+                    );
+                  }
                 },
                 child: const Text(
                   "View all",

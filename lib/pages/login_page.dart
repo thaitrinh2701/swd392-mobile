@@ -81,8 +81,8 @@ class _LoginPageState extends State<LoginPage> {
         "WELCOME BACK, ROOKIE !!",
         textAlign: TextAlign.center,
         style: TextStyle(
-          fontSize: 23,
-          fontWeight: FontWeight.w200,
+          fontSize: 20,
+          fontWeight: FontWeight.w100,
           color: Colors.black,
         ),
       ),
@@ -173,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             Image.asset("assets/images/google_icon.png", height: 24),
             const SizedBox(width: 12),
-            const Text("Sign in with Google", style: TextStyle(fontSize: 18)),
+            const Text("Sign in with Google", style: TextStyle(fontSize: 13)),
           ],
         ),
       ),

@@ -14,124 +14,140 @@ class AllMangasListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: title != null ? AppBar(title: Text(title!)) : null,
-      body: ListView.builder(
-        padding: const EdgeInsets.all(8.0),
-        itemCount: mangas.length,
-        itemBuilder: (context, index) {
-          final manga = mangas[index];
+      body:
+          mangas.isEmpty
+              ? const Center(child: Text("No manga available"))
+              : ListView.builder(
+                padding: const EdgeInsets.all(8.0),
+                itemCount: mangas.length,
+                cacheExtent: 500, // Tăng hiệu suất cuộn
+                itemBuilder: (context, index) {
+                  final manga = mangas[index];
+                  final String imageUrl = manga["cover_url"] ?? "";
 
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MangaDetailPage(manga: manga),
-                ),
-              );
-            },
-            child: Stack(
-              children: [
-                // Ảnh nền với hiệu ứng blur
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Stack(
-                    children: [
-                      // Ảnh nền
-                      Container(
-                        height: 180,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          image: DecorationImage(
-                            image: CachedNetworkImageProvider(
-                              manga["cover_url"] ?? "",
-                            ),
-                            fit: BoxFit.cover,
-                          ),
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MangaDetailPage(manga: manga),
                         ),
+                      );
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(vertical: 8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.black.withOpacity(0.1),
                       ),
-                      // Lớp mờ
-                      Positioned.fill(
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-                          child: ClipRRect(
-                            // Đưa ClipRRect ra ngoài BackdropFilter
+                      child: Stack(
+                        children: [
+                          // Ảnh nền với hiệu ứng blur
+                          ClipRRect(
                             borderRadius: BorderRadius.circular(12),
-                            child: Container(
-                              color: Colors.black.withOpacity(0.3),
-                              child: const SizedBox.expand(),
+                            child: CachedNetworkImage(
+                              imageUrl: imageUrl,
+                              fit: BoxFit.cover,
+                              height: 180,
+                              width: double.infinity,
+                              placeholder:
+                                  (context, url) => Container(
+                                    height: 180,
+                                    color: Colors.grey[300],
+                                  ),
+                              errorWidget:
+                                  (context, url, error) => Container(
+                                    height: 180,
+                                    color: Colors.grey[400],
+                                    child: const Icon(
+                                      Icons.broken_image,
+                                      size: 50,
+                                    ),
+                                  ),
                             ),
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
 
-                // Nội dung chính
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Ảnh bìa chính
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: CachedNetworkImage(
-                          imageUrl: manga["cover_url"] ?? "",
-                          width: 110,
-                          height: 160,
-                          fit: BoxFit.cover,
-                          errorWidget:
-                              (context, url, error) => const Icon(
-                                Icons.broken_image,
-                                size: 80,
-                                color: Colors.grey,
-                              ),
-                        ),
-                      ),
-                      const SizedBox(width: 14),
-
-                      // Thông tin truyện
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              manga["comic_name"] ?? "Unknown",
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            const SizedBox(height: 6),
-                            Text(
-                              manga["description"] ??
-                                  "No description available",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.white,
+                          // Lớp mờ
+                          Positioned.fill(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: BackdropFilter(
+                                filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+                                child: Container(
+                                  color: Colors.black.withOpacity(0.3),
+                                ),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+
+                          // Nội dung chính
+                          Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Ảnh bìa chính
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: CachedNetworkImage(
+                                    imageUrl: imageUrl,
+                                    width: 110,
+                                    height: 160,
+                                    fit: BoxFit.cover,
+                                    placeholder:
+                                        (context, url) => Container(
+                                          width: 110,
+                                          height: 160,
+                                          color: Colors.grey[300],
+                                        ),
+                                    errorWidget:
+                                        (context, url, error) => const Icon(
+                                          Icons.broken_image,
+                                          size: 80,
+                                        ),
+                                  ),
+                                ),
+                                const SizedBox(width: 14),
+
+                                // Thông tin truyện
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        manga["comic_name"] ?? "Unknown",
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      const SizedBox(height: 6),
+                                      Text(
+                                        manga["description"] ??
+                                            "No description available",
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
+                    ),
+                  );
+                },
+              ),
       backgroundColor: Colors.white,
     );
   }
